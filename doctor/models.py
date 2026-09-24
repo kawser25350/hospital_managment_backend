@@ -2,6 +2,17 @@ from django.db import models
 from django.contrib.auth.models import User
 from phonenumber_field.modelfields import PhoneNumberField
 from autoslug import AutoSlugField
+from patient.models import Patient
+
+
+star_choices=[
+    (1,'⭐'),
+    (2,'⭐⭐'),
+    (3,'⭐⭐⭐'),
+    (4,'⭐⭐⭐⭐'),
+    (5,'⭐⭐⭐⭐⭐'),
+
+]
 
 class Specialization(models.Model):
     name=models.CharField(max_length=100)
@@ -38,3 +49,11 @@ class Doctor(models.Model):
 
     def __str__(self):
         return f"{self.user.first_name} - {self.user.last_name} - {self.phone}"
+
+class Review(models.Model):
+    reviewer=models.ForeignKey(Patient,on_delete=models.CASCADE)
+    doctor=models.ForeignKey(Doctor,on_delete=models.CASCADE);
+    body=models.TextField()
+    created=models.DateTimeField(auto_now_add=True)
+    rating =models.PositiveIntegerField(choices=star_choices)
+
