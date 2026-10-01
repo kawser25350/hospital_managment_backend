@@ -9,4 +9,5 @@ router.register('list',views.PatientViewset,basename='Patient')
 
 urlpatterns = [
     path('',include(router.urls)),
+    path('register/',views.RegistratoinApiView.as_view(),name='register')
 ]
