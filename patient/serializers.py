@@ -29,7 +29,12 @@ class RegistrationSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError({'error':"Email already Exits"}); 
         account = User(username=username,email=email,first_name=first_name,last_name=last_name)
         account.set_password(pass1)
+        account.is_active = False
         account.save()
         print(account)
         return account
 
+class LoginSerializer(serializers.Serializer):
+    username=serializers.CharField(required=True)
+    password=serializers.CharField(required=True)
+    
